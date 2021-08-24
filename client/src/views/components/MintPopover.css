@@ -1,0 +1,6 @@
+#MintPopover input {
+  text-align: center;
+}
+#MintPopover .ant-input-number {
+  width: -webkit-fill-available;
+}

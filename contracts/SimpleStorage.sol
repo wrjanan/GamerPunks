@@ -1,4 +1,4 @@
-pragma solidity ^0.6.2;
+pragma solidity ^0.7.2;
 
 contract SimpleStorage {
     string public text;
