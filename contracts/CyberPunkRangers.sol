@@ -1791,6 +1791,13 @@ contract CyberPunkRangers is ICyberPunkRangers, ERC721, Ownable {
     }
 
     /**
+     * @dev Returns description of the NFT at index.
+     */
+    function tokenDescriptionByIndex(uint256 index) public view returns (string memory) {
+        return _tokenDescription[index];
+    }
+
+    /**
      * @dev Returns if the name has been reserved.
      */
     function isNameReserved(string memory nameString) public view returns (bool) {

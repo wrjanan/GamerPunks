@@ -6,6 +6,11 @@
   height: 40vmin;
   pointer-events: none;
 }
+.force-center {
+  justify-content: center;
+  text-align: -moz-center;
+  text-align: -webkit-center;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

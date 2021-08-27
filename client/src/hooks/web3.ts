@@ -1,23 +1,22 @@
 import { useState, useEffect } from 'react';
 import Web3 from 'web3';
 import getWeb3 from '../utils/getWeb3';
-import { Contract } from 'web3-eth-contract';
 
 type state = {
   isLoading: boolean;
   isWeb3: boolean;
   web3: Web3 | null;
   accounts: string[];
-  contracts: { [path: string]: Contract }
+  account: string | null;
 };
 
-const Hooks = (): state => {
+const Web3Hook = (): state => {
   const [state, setState] = useState<state>({
     isLoading: true,
     isWeb3: false,
     web3: null,
     accounts: [],
-    contracts: {},
+    account: null,
   });
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const Hooks = (): state => {
           isWeb3: true,
           web3,
           accounts,
-          contracts
+          account: accounts[0],
         });
       } catch {
         setState({
@@ -43,7 +42,7 @@ const Hooks = (): state => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { isLoading, isWeb3, web3, accounts, contracts } = state;
-  return { isLoading, isWeb3, web3, accounts, contracts };
+  const { isLoading, isWeb3, web3, accounts, account } = state;
+  return { isLoading, isWeb3, web3, accounts, account };
 };
-export default Hooks;
+export default Web3Hook;
