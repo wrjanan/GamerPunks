@@ -1,0 +1,53 @@
+<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        @font-face {
+        font-family: 'neon_lightsregular';
+        src: url('./neonlights-22d-webfont.woff2') format('woff2'),
+            url('./neonlights-22d-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        }
+
+        .filtered {
+            filter: url(#gemma-glow);
+        }
+
+        .glow-blue {
+            text-shadow: 0 0 1px #fff, 0 0 10px #fff, 0 0 5px #fff, 0 0 2px blue, 0 0 60px blue, 0 0 13px blue;
+        }
+
+        .glow-red {
+            text-shadow: 0 0 1px #fff, 0 0 10px #fff, 0 0 5px #fff, 0 0 2px red, 0 0 60px red, 0 0 13px red;
+        }
+
+        text {
+            font: italic 40px neon_lightsregular;
+        }
+        .text {
+            font: italic 40px neon_lightsregular;
+        }
+
+        .top {
+            fill: cyan
+        }
+
+        .bot {
+            fill: red;
+        }
+    </style>
+    <g class="filtered">
+        <text x="40" y="55" transform="rotate(3)" class="top glow-blue text" >Hooter</text>
+        <text x="70" y="100" transform="rotate(-5)" class="bot glow-red">Punks</text>
+    </g>
+    <filter id="gemma-glow" y="-40%" x="-40%" height="180%" width="180%">
+        <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="BEVEL_10" />
+        <feOffset dx="0.5" dy="-1.5" in="BEVEL_20" result="BEVEL_30" />
+        <feComposite operator="out" in="BEVEL_20" in2="BEVEL_10" result="BEVEL_30" />
+        <feFlood flood-color="#D874FF" result="COLOR-glow" />
+        <feComposite in="COLOR-glow" in2="BEVEL_30" operator="in" result="BEVEL_40" />
+        <feMerge result="BEVEL_50">
+            <feMergeNode in="BEVEL_40" />
+            <feMergeNode in="SourceGraphic" />
+        </feMerge>
+    </filter>
+</svg>

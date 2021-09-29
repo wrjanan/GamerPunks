@@ -9,11 +9,11 @@ export interface ContractState {
   web3Provider: provider | null;
   web3: Web3 | null;
   account: string | null;
-  contracts: CyberPunkContracts;
+  contracts: GamerPunksContracts;
 }
-export type CyberPunkContracts = {
-  CyberPunkRangersContract?: Contract,
-  CyberPunkRangersTokenContract?: Contract,
+export type GamerPunksContracts = {
+  GamerPunksContract?: Contract,
+  GamerPunksTokenContract?: Contract,
 }
 
 export interface ContractContextState {
@@ -22,7 +22,7 @@ export interface ContractContextState {
   web3Provider: provider | null;
   web3: Web3 | null;
   account: string | null;
-  contracts: CyberPunkContracts;
+  contracts: GamerPunksContracts;
 }
 
 export const initialState: ContractState = {
@@ -45,18 +45,14 @@ export interface ContractActions {
 }
 
 export const reducer = (state: ContractState, action: ContractActions): ContractState => {
-  console.log("reducer", action, state);
-
   switch (action.type) {
     case SET_LOADING:
       return { ...state, status: ApiRequestStatus.isLoading };
     case SET_FAILED:
       return { ...state, status: ApiRequestStatus.isFailed };
     case SET_CONTRACTS:
-      console.log("SET_CONTRACTS", { ...state, contracts: action.payload, status: ApiRequestStatus.isSuccessful })
       return { ...state, ...action.payload, status: ApiRequestStatus.isSuccessful };
     case SET_CONTEXT:
-      console.log("SET_CONTEXT", { ...state, ...action.payload, status: ApiRequestStatus.isSuccessful })
       return { ...state, ...action.payload, status: ApiRequestStatus.isSuccessful };
     default:
       return state;

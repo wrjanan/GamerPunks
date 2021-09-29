@@ -1,3 +1,30 @@
 .MobilePopupMenu{
   transform: translate(50%, 50px);
 }
+
+.header-socials {
+  color: rgb(93 46 111);
+}
+.header-socials svg {
+  cursor: pointer;
+}
+
+.rounded-circle.border-secondary {
+  border-color:rgb(93 46 111) !important;
+}
+
+button span.spinner-grow {
+  color:#7f7c7f;
+}
+
+.header-socials button {
+  color: white;
+  border: none;
+  background: transparent;
+}
+.header-socials button:hover {
+  color: rgb(93 46 111);
+}
+.header-socials button:active {
+  color: #cc95c9;
+}

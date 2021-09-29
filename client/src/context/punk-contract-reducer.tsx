@@ -3,13 +3,13 @@ import { Contract } from "web3-eth-contract";
 import _ from "lodash";
 
 export interface PunkState {
-  cyberPunkRangerContract: Contract | null,
+  gamerPunksContract: Contract | null,
   punks: any[] | null;
   status: ApiRequestStatus;
 }
 
 export const initialPunkState: PunkState = {
-  cyberPunkRangerContract: null,
+  gamerPunksContract: null,
   punks: null,
   status: ApiRequestStatus.none
 };
@@ -24,7 +24,6 @@ export interface AppActions {
 }
 
 export const reducer = (state: PunkState, action: AppActions): PunkState => {
-  console.log("reducer", state, action);
   switch (action.type) {
     case SET_LOADING:
       return { ...state, status: ApiRequestStatus.isLoading };

@@ -3,7 +3,7 @@ import { Contract } from "web3-eth-contract";
 import { ApiRequestStatus } from "../constants/api-request-status";
 import { useContractContext } from "./contract-context";
 import { PunkState, reducer, SET_FAILED, SET_LOADING, SET_PUNK_CONTEXT } from "./punk-contract-reducer";
-import CyberPunkRangersContract from "../contracts/CyberPunkRangers.json";
+import GamerPunksContract from "../contracts/GamerPunks.json";
 import { useWeb3Context } from "./web3-context";
 
 export interface PunkContextState extends PunkState{
@@ -11,7 +11,7 @@ export interface PunkContextState extends PunkState{
 }
 
 const initialState: PunkContextState = {
-  cyberPunkRangerContract: null,
+  gamerPunksContract: null,
   punks: null,
   status: ApiRequestStatus.none,
   getPunks: (): void => {
@@ -26,8 +26,8 @@ const usePunkContext = (): PunkContextState => useContext(PunkContext);
 export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):React.ReactElement => {
   const [ state, dispatch ] = React.useReducer(reducer, initialState);
   const { web3, account } = useWeb3Context();
-  const deployedNetwork = CyberPunkRangersContract.networks[5777];
-  const abi: any = CyberPunkRangersContract.abi;
+  const deployedNetwork = GamerPunksContract.networks[5777];
+  const abi: any = GamerPunksContract.abi;
 
   const fetchingNow = React.useRef(false);
 
@@ -37,7 +37,7 @@ export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):Re
         abi,
         deployedNetwork && deployedNetwork.address
       );
-      dispatch({ type: SET_PUNK_CONTEXT, payload: { cyberPunkRangerContract: contract } });
+      dispatch({ type: SET_PUNK_CONTEXT, payload: { gamerPunksContract: contract } });
       return contract;
     }
     return undefined;
@@ -55,17 +55,12 @@ export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):Re
 
   const fetchPunks = useCallback(async () => {
     let contract: Contract | undefined;
-    if(!state.cyberPunkRangerContract) {
-      console.log("state.cyberPunkRangerContract",state.cyberPunkRangerContract);
+    if(!state.gamerPunksContract) {
       contract = setContract();
-      console.log("state.cyberPunkRangerContract",contract);
     } else {
-      contract = state.cyberPunkRangerContract;
-      console.log("existing contract", contract);
+      contract = state.gamerPunksContract;
     }
     const results = await contract?.methods.balanceOf(account).call().then((accountPunks: any) => {
-      console.log("accountPunks",accountPunks);
-
       const getPunkAddress = async (index: number) => {
         return contract?.methods.tokenOfOwnerByIndex(account, index).call();
       }
@@ -78,23 +73,19 @@ export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):Re
         promises.push(getPunkAddress(i));
       }
       return Promise.all(promises).then((result) => {
-        console.log("result", result);
         const punkAddresses: any[] = [];
         result.forEach(punk => punkAddresses.push(punk));
         promises = [];
-        console.log("punkAddresses", punkAddresses);
         for (let i = 0; i < punkAddresses.length; i++) {
           promises.push(getPunkURI(i));
         }
         return Promise.all(promises);
       })
     });
-    console.log("results", results);
     return results;
   },[]);
 
   const getPunks = useCallback(async () => {
-    console.log("fetchingNow", fetchingNow);
     if (fetchingNow.current) {
       return;    }
 

@@ -11,7 +11,7 @@ const MintPopover: React.FC<MintPopoverProps> = ({
   children,
 }): React.ReactElement=> {
   const { account, contracts } = useContractContext();
-  const { CyberPunkRangersContract } = contracts;
+  const { GamerPunksContract } = contracts;
   const [clicked, setClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,9 +61,9 @@ const MintPopover: React.FC<MintPopoverProps> = ({
       const nftCount = number.value
 
       setIsLoading(true);
-      await CyberPunkRangersContract?.methods.getNFTPrice().call().then((nftPrice: any) => {
-        return CyberPunkRangersContract?.methods.mintNFT(nftCount).estimateGas({ value: nftCount * nftPrice }).then((gas: any) => {
-          return CyberPunkRangersContract?.methods.mintNFT(nftCount).send({ from: account, value: nftCount * nftPrice }).then((response: any) => {
+      await GamerPunksContract?.methods.getNFTPrice().call().then((nftPrice: any) => {
+        return GamerPunksContract?.methods.mintNFT(nftCount).estimateGas({ value: nftCount * nftPrice }).then((gas: any) => {
+          return GamerPunksContract?.methods.mintNFT(nftCount).send({ from: account, value: nftCount * nftPrice }).then((response: any) => {
             console.log("successful transaction", response);
           });
         });
@@ -82,7 +82,7 @@ const MintPopover: React.FC<MintPopoverProps> = ({
       </Form.Item>
       <Form.Item style={{textAlign: "end"}}>
         <Button type="primary" htmlType="submit" disabled={isLoading} loading={isLoading}>
-          Mint {number.value} Rangers Now
+          Mint {number.value} PunkGamer Now
         </Button>
       </Form.Item>
     </Form>);

@@ -1,0 +1,250 @@
+<html>
+
+<body style="margin: 0px;">
+  <canvas id="canvas"></canvas>
+</body>
+<script>
+  var fps = 30;
+  var fpsInterval = 1000 / fps;
+  var canvas = document.getElementById("canvas")
+  var c = canvas.getContext('2d')
+  var drag = false;
+  var color = [
+    '#334D5C',
+    '#45B29D',
+    '#EFC94C',
+    '#E27A3F',
+    '#DF5A49'
+  ]
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+  var scroll = {
+    y: 0
+  }
+  var mouse = {
+    x: 0,
+    y: 0
+  }
+
+  function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  var radius = 5
+  var Circle = function (x, y, radius, color) {
+    this.radius = Math.floor(Math.random() * radius + 1)
+    this.color = color
+    this.dx = (Math.random() - 0.5) * 5;
+    this.dy = (Math.random() - 0.5) * 5;
+    this.pos = {
+      x: x,
+      y: y
+    }
+  }
+  Circle.prototype.update = function () {
+    this.pos.x += this.dx;
+    this.pos.y += this.dy
+    if (this.pos.x + this.radius > canvas.width || this.pos.x - this.radius < 0) {
+      this.dx = -this.dx
+    }
+    if (this.pos.y + radius > canvas.height || this.pos.y - radius < 0) {
+      this.dy = -this.dy
+    }
+
+    if (this.pos.x + this.radius * 2 > mouse.x && mouse.x != 0) {
+      this.dx -= 1
+    }
+    if (this.pos.x < mouse.x - this.radius * 2 && mouse.x != 0) {
+      this.dx += 1.5
+    }
+
+    if (this.dx > 5)
+      this.dx -= 1
+
+    if (this.pos.y + this.radius * 2 > mouse.y + this.radius * 1 && mouse.y != 0) {
+      this.dy -= 1
+    }
+    if (this.pos.y < mouse.y - this.radius * 2 && mouse.y != 0) {
+      this.dy += 1.5
+    }
+
+    if (this.dy > 5)
+      this.dy -= 1
+
+  }
+  Circle.prototype.render = function () {
+    c.beginPath();
+    c.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2, false)
+    c.fillStyle = this.color
+    c.strokeStyle = this.color
+    c.fill();
+    c.stroke();
+  }
+  Circle.prototype.initCircle = function () {
+    this.pos = {
+      x: Math.random() * (canvas.width - this.radius * 2) + this.radius,
+      y: Math.random() * (canvas.height - this.radius * 2) + this.radius
+    }
+  }
+
+  var DiscoLight = function (speed, size, hue, saturation, lightness) {
+    this.hue = 0;
+    this.saturation = "100%";
+    this.lightness = "70%";
+    this.speed = speed;
+    this.size = size
+  }
+
+  var StrobeLight = function (paths, length, dashRadius, opacity) {
+    this.offset = 0;
+    this.hue = 210;
+    this.hueReverse = false;
+    this.opacity = opacity;
+    this.length = length;
+    this.dashRadius = dashRadius;
+
+    this.paths = [];
+    for (var i = 0; i < paths.length; i++) {
+      if (i == 0) {
+        this.pos = {
+          x: paths[i][0],
+          y: paths[i][1]
+        };
+      } else {
+        this.paths.push(paths[i])
+      }
+    }
+  }
+  StrobeLight.prototype.changeColor = function () {
+    if (this.hueReverse) {
+      this.hue-= 0.5; // = (this.hue++ % 150) + 210;
+    } else {
+      this.hue+= 0.5; // = (this.hue++ % 150) + 210;
+    }
+    if (this.hue == 360) {
+      this.hueReverse = true;
+    } else if (this.hue == 210) {
+      this.hueReverse = false;
+    }
+  }
+  StrobeLight.prototype.update = function () {
+    this.offset--;
+    // if(this.hueReverse) {
+    //   this.hue--; // = (this.hue++ % 150) + 210;
+    // } else {
+    //   this.hue++; // = (this.hue++ % 150) + 210;
+    // }
+    // if(this.hue == 360) {
+    //   this.hueReverse = true;
+    // } else if(this.hue == 210) {
+    //   this.hueReverse = false;
+    // }
+  }
+  StrobeLight.prototype.render = function () {
+    // c.strokeStyle = this.color
+    c.setLineDash(this.dashRadius);
+    c.strokeStyle = 'hsla(' + this.hue + ', 100%, 50%, ' + this.opacity + ')';
+    c.shadowBlur = 7;
+    c.shadowColor = c.strokeStyle;
+    c.lineDashOffset = this.offset;
+    c.lineWidth = this.length
+    c.beginPath();
+    c.moveTo(this.pos.x, this.pos.y)
+
+    for (var path in this.paths) {
+      c.lineTo(this.paths[path][0], this.paths[path][1]);
+    }
+    c.stroke();
+  }
+  addEventListener("mousemove", function (event) {
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
+
+    changeStrobeLightsColor();
+  });
+  addEventListener("wheel", function (event) {
+    changeStrobeLightsColor();
+  });
+
+  /* ---- Functions ---- */
+  var circle = [];
+  for (var i = 0; i < 100; i++) {
+    var randomX = Math.random() * (canvas.width - radius * 1) + radius
+    var randomY = Math.random() * (canvas.height - radius * 1) + radius
+    circle.push(new Circle(randomX, randomY, radius, color[Math.floor(Math.random() * color.length)]))
+  }
+
+  var strobeLights = [];
+  var dashRadius = [6, 6];
+  var iL = Math.floor(canvas.width / 10); // inner left bound
+  var iR = Math.floor(canvas.width - iL); // inner right bound
+  var iT = Math.floor(canvas.height / 10); // inner top bound
+  var iB = Math.floor(canvas.height - iT); // inner bottom bound
+  var ptTL = [0, 0] // point at top left
+  ptTR = [canvas.width, 0] // point at top right
+  ptBR = [canvas.width, canvas.height] // point at bottom right
+  ptBL = [0, canvas.height] // point at bottom left
+  ptITL = [iL, iT] // point at inner top left
+  ptITR = [iR, iT] // point at inner top right
+  ptIBR = [iR, iB] // point at inner bottom right
+  ptIBL = [iL, iB] // point at inner bottom left
+  strobeLights.push(new StrobeLight([ptTL, ptITL, ptITR], radius, dashRadius, 1))
+  strobeLights.push(new StrobeLight([ptTR, ptITR, ptIBR], radius, dashRadius, 1))
+  strobeLights.push(new StrobeLight([ptBR, ptIBR, ptIBL], radius, dashRadius, 1))
+  strobeLights.push(new StrobeLight([ptBL, ptIBL, ptITL], radius, dashRadius, 1))
+  var strobeLightRoom = [
+    ptBL, ptIBL, 
+    ptITL, ptTL, ptITL, 
+    ptITR, ptTR, ptITR,
+    ptIBR, ptBR, ptIBR,
+    ptIBL]
+  strobeLights.push(new StrobeLight(strobeLightRoom, radius, [0,0], 0.42))
+
+  const changeStrobeLightsColor = () => {
+    for (var i = 0; i < strobeLights.length; i++) {
+      strobeLights[i].changeColor();
+    }
+  }
+
+  c.fillStyle = "rgba(0,0,0,0.9)";
+  c.fillRect(0, 0, canvas.width, canvas.height)
+  c.fill();
+
+  // function loop() {
+  //   c.beginPath();
+  //   c.fillStyle = "black";
+  //   c.textAlign = "center";
+  //   c.font = "80px Sans-serif";
+  //   c.fillText("Move Mouse", canvas.width / 2, canvas.height / 2);
+  //   c.closePath();
+  //   for (var i = 0; i < circle.length; i++) {
+  //     circle[i].update();
+  //     circle[i].render();
+  //   }
+
+  //   requestAnimationFrame(loop);
+  // }
+
+  then = Date.now();
+  function loop() {
+    now = Date.now();
+    elapsed = now - then;
+
+    if (elapsed > fpsInterval) {
+      then = now - (elapsed % fpsInterval);
+
+      c.fillStyle = "rgba(0,0,0,0.9)";
+      c.fillRect(0, 0, canvas.width, canvas.height)
+
+      for (var i = 0; i < strobeLights.length; i++) {
+        strobeLights[i].update();
+        strobeLights[i].render();
+      }
+    }
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+</script>
+
+</html>

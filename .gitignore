@@ -4,3 +4,5 @@
 /client/src/contracts
 /cache
 .env
+/generation/output
+/generation/outputgif

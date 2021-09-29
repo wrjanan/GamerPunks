@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100vw" height="100vh"
+id="room" preserveAspectRatio="none" viewBox="0 0 200 100">
+  <path class="strobing" d="M-10 -10 L10 10 L190 10 " fill="none" stroke-width="0.25"
+  stroke="#bc85ff"  stroke-dasharray="10" />
+  <path class="strobing" d="M210 -10 L190 10 L190 90 " fill="none" stroke-width="0.25"
+  stroke="#bc85ff"  stroke-dasharray="10" />
+  <path class="strobing" d="M210 110 L190 90 L10 90 " fill="none" stroke-width="0.25"
+  stroke="#bc85ff"  stroke-dasharray="10" />
+  <path class="strobing" d="M-10 110 L10 90 L10 10 " fill="none" stroke-width="0.25"
+  stroke="#bc85ff"  stroke-dasharray="10" />
+  <path class="strobing" d="M-10 -10 L10 10 L190 10 " fill="none" stroke-width="1"
+  stroke="#bc85ff"  stroke-dasharray="10" filter="url(#neon)" />
+  <path class="strobing" d="M210 -10 L190 10 L190 90 " fill="none" stroke-width="1"
+  stroke="#bc85ff"  stroke-dasharray="10" filter="url(#neon)" />
+  <path class="strobing" d="M210 110 L190 90 L10 90 " fill="none" stroke-width="1"
+  stroke="#bc85ff"  stroke-dasharray="10" filter="url(#neon)" />
+  <path class="strobing" d="M-10 110 L10 90 L10 10 " fill="none" stroke-width="1"
+  stroke="#bc85ff"  stroke-dasharray="10" filter="url(#neon)" />
+
+  <defs>
+    <filter id="neon"  y="-40%" x="-40%" height="180%" width="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+    </filter>
+  </defs>
+</svg>

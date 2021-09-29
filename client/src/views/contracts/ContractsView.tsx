@@ -5,7 +5,7 @@ import { useContractContext } from '../../context/contract-context';
 const ContractsView: React.VFC = () => {
   const { status, isWeb3, account, contracts } = useContractContext();
   const [value, setValue] = useState('');
-  const contract = contracts.CyberPunkRangersTokenContract;
+  const contract = contracts.GamerPunksTokenContract;
 
   const runExample = useCallback(async() => {
     const response = await contract?.methods.name().call();

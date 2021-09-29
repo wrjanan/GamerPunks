@@ -1,3 +1,15 @@
+body {
+  background-color: black;
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+h1.ant-typography, h2.ant-typography, h3.ant-typography, h4.ant-typography, h5.ant-typography, h6.ant-typography,
+span.ant-typography { 
+  color: rgb(221 130 255);
+  font-family: 'neon_lightsregular';
+}
+
 .App {
   text-align: center;
 }
@@ -40,4 +52,23 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+@font-face {
+  font-family: 'neon_lightsregular';
+  src: url('../fonts/neonlights-22d-webfont.woff2') format('woff2'),
+       url('../fonts/neonlights-22d-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+Layout {
+  background-color: rgba(0,0,0,0);
+}
+
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }

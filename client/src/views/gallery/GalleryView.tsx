@@ -49,14 +49,12 @@ const GalleryView: React.VFC = () => {
 
     // }
 
-    // if(cyberPunkRangerContract) {
-    //   fetchPunks(cyberPunkRangerContract)
+    // if(gamerPunksContract) {
+    //   fetchPunks(gamerPunksContract)
     // }
   }, []);
 
   const printDetails = () => {
-    console.log(status);
-    console.log(isWeb3);
     if(status === ApiRequestStatus.isLoading) {
       return (<div>Loading Web3, accounts, and contract...</div>);
     }

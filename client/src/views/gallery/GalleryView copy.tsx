@@ -12,12 +12,7 @@ const GalleryView: React.VFC = () => {
   const getAllPunksOfUser = useCallback(async() => {
     if(status === ApiRequestStatus.none || !punks) {
       const temp = await getPunks();
-      console.log("temp", temp);
-      console.log("getting punks")
     }
-    console.log("got punk,", punks)
-
-    console.log(punks);
     setValue(punks?.join(",") || '');
 
     return punks;
@@ -25,7 +20,7 @@ const GalleryView: React.VFC = () => {
 
   useEffect(() => {
     const fetchData = async() => {
-      if(!contracts.CyberPunkRangersContract) {
+      if(!contracts.GamerPunksContract) {
         await fetchContract();
       }
       await getAllPunksOfUser();

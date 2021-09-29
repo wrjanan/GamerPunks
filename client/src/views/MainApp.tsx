@@ -3,26 +3,40 @@ import '../css/App.css';
 import Layout from 'antd/lib/layout/layout';
 import Intro from './main/1-intro';
 import Rarity from './main/2-rarity';
-import RangerGallery from './main/3-ranger';
-import MyRangerGallery from './main/4-myrangers';
+import PunkGallery from './main/5-punk';
+import MyPunkGallery from './main/6-mypunks';
+import Intro2 from './main/1-intro2';
+import Team from './main/3-team';
 
+const layoutStyle: React.CSSProperties = { 
+  minHeight: "80vh", 
+  textAlign: 'center', 
+  justifyContent: "center", 
+  backgroundColor: "transparent" 
+};
 
 function Main() {
 
 
   return (
     <>
-      <Layout style={{ minHeight: "90vh", textAlign: 'center', justifyContent: "center" }}>
+      <Layout style={{ ...layoutStyle, minHeight: "70vh" }}>
         <Intro />
       </Layout>
-      <Layout style={{ minHeight: "100vh", textAlign: 'center', justifyContent: "center", backgroundColor:"biege" }}>
+      <Layout style={layoutStyle}>
+        <Intro2 />
+      </Layout>
+      <Layout style={layoutStyle}>
         <Rarity />
       </Layout>
-      <Layout style={{ minHeight: "100vh", textAlign: 'center', justifyContent: "center", backgroundColor:"biege" }}>
-        <RangerGallery />
+      <Layout style={layoutStyle}>
+        <Team />
       </Layout>
-      <Layout style={{ minHeight: "100vh", textAlign: 'center', justifyContent: "center", backgroundColor:"biege" }}>
-        <MyRangerGallery />
+      <Layout style={layoutStyle}>
+        <PunkGallery />
+      </Layout>
+      <Layout style={layoutStyle}>
+        <MyPunkGallery />
       </Layout>
     </>
   );

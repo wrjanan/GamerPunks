@@ -6,9 +6,51 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   word-wrap: break-word;
+  background-color: transparent;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#mainBackground {
+  max-height: 100vh;
+  min-height: 100vh;
+  min-width: 100vw;
+  /* background-color:pink; */
+  overflow: hidden;
+  z-index:-1;
+}
+
+.black-color {
+  background: #101010;
+}
+
+#room {
+  fill: #101010;
+    right: 0%;
+    top: 0%;
+    z-index: 1;
+}
+
+/*
+#side-shape2 path {
+  stroke-dashoffset: 420;
+  animation: draw 2s linear forwards infinite;
+} */
+
+.strobing, .squiggle{
+  stroke-dashoffset: 100;
+  animation: draw 10s linear forwards infinite;
+  stroke:"#bc85ff";
+}
+
+@keyframes draw {
+  0%   {stroke:red;     stroke-dashoffset: 100;  }
+  5%, 45%  {stroke:"#bc85ff"}
+  50%  {stroke:blue}
+  55%, 95%  {stroke:"#bc85ff"}
+  100% {stroke:red;     stroke-dashoffset: 0;
+  }
 }
