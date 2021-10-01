@@ -10,7 +10,7 @@ const StrobeLights: React.FC = () => {
             canvasCtxRef.current = canvasRef.current.getContext('2d');
             let c = canvasCtxRef.current;
 
-            var fps = 30;
+            var fps = 60;
             var fpsInterval = 1000 / fps;
             var canvas = canvasRef.current
             var drag = false;
@@ -103,7 +103,7 @@ const StrobeLights: React.FC = () => {
                     c.lineWidth = this.length
                     c.beginPath();
                     c.moveTo(this.pos.x, this.pos.y)
-    
+
                     for (var path in this.paths) {
                         c.lineTo(this.paths[path][0], this.paths[path][1]);
                     }
@@ -154,7 +154,7 @@ const StrobeLights: React.FC = () => {
                     strobeLights[i].changeColor();
                 }
             }
-            
+
             if(!c) { return }
 
             c.fillStyle = "rgba(0,0,0,0.9)";

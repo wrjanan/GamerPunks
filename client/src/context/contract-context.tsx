@@ -46,9 +46,9 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
       const accounts = await web3.eth.getAccounts();
       const account = accounts[0];
 
-      const deployedNetwork = GamerPunksTokenContract.networks[5777];
+      const deployedNetwork = GamerPunksTokenContract.networks[1632905915117];
       const abi: any = GamerPunksTokenContract.abi;
-      const deployedNetwork2 = GamerPunksContract.networks[5777];
+      const deployedNetwork2 = GamerPunksContract.networks[1632905915117];
       const abi2: any = GamerPunksContract.abi;
       const contracts:GamerPunksContracts = {
         GamerPunksTokenContract: new web3.eth.Contract(

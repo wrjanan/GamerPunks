@@ -22,13 +22,13 @@ const ContractHook = (): ContractState => {
     (async(): Promise<void> => {
       try {
         if(web3) {
-          const deployedNetwork = GamerPunksTokenContract.networks[5777];
+          const deployedNetwork = GamerPunksTokenContract.networks[1632905915117];
           const abi: any = GamerPunksTokenContract.abi;
           const gamerPunksTokenContract = new web3.eth.Contract(
             abi,
             deployedNetwork && deployedNetwork.address
           );
-          const deployedNetwork2 = GamerPunksContract.networks[5777];
+          const deployedNetwork2 = GamerPunksContract.networks[1632905915117];
           const abi2: any = GamerPunksContract.abi;
           const gamerPunksContract = new web3.eth.Contract(
             abi2,

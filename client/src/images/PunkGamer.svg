@@ -14,9 +14,11 @@
 
         text {
             font: italic 40px neon_lightsregular;
-        }
-        .text {
-            font: italic 40px neon_lightsregular;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .top {

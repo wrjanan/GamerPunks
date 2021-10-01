@@ -4,28 +4,32 @@ import "../components/MintPopover.css";
 import Title from "antd/lib/typography/Title";
 import { DownloadOutlined } from '@ant-design/icons';
 import { useState, useEffect } from "react";
-import { useContractContext } from "../../context/contract-context";
+import { BigNumber, ethers } from "ethers";
+import PunkGamerABI from "../../abi/PunkGamer";
 
 const Intro2 = (): React.ReactElement => {
-  const { contracts, fetchContract } = useContractContext();
   const [ maxPunks, setMaxPunks ] = useState('');
   const [ mintedPunks, setMintedPunks ] = useState('');
-  const contract = contracts.GamerPunksContract;
 
   useEffect(() => {
-    const getMaxPunks = async() => {
-      if(!contract) {
-        await fetchContract();
-      }
-      const maxPunks = await contract?.methods.MAX_NFT_SUPPLY().call();
-      setMaxPunks(maxPunks);
-
-      const mintedPunks = await contract?.methods.totalSupply().call()
-      setMintedPunks(mintedPunks);
-    }
-    getMaxPunks();
-  }, [contract]);
-
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    const contractAddress = "0xdf662Fd4E20Bd9E1c488Fd50f5265220EA203a1b"
+    const contract = new ethers.Contract(contractAddress, PunkGamerABI.abi, provider);
+    contract.deployed().then((result: any) => {
+      console.log(result);
+    });
+    contract.MAX_NFT_SUPPLY().then((result: any) => {
+      const punks = BigNumber.from(result).toString();
+      console.log(punks);
+      setMaxPunks(punks);
+    });
+    contract.totalSupply().then((result: any) => {
+      const punks = BigNumber.from(result).toString();
+      console.log(punks);
+      setMintedPunks(punks);
+    });
+  }, []);
 
   return (
     <>

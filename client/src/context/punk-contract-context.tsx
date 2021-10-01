@@ -26,7 +26,7 @@ const usePunkContext = (): PunkContextState => useContext(PunkContext);
 export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):React.ReactElement => {
   const [ state, dispatch ] = React.useReducer(reducer, initialState);
   const { web3, account } = useWeb3Context();
-  const deployedNetwork = GamerPunksContract.networks[5777];
+  const deployedNetwork = GamerPunksContract.networks[1632905915117];
   const abi: any = GamerPunksContract.abi;
 
   const fetchingNow = React.useRef(false);

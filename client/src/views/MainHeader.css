@@ -23,8 +23,9 @@ button span.spinner-grow {
   background: transparent;
 }
 .header-socials button:hover {
-  color: rgb(93 46 111);
+  color: #ac72a9;
 }
-.header-socials button:active {
+.header-socials button:active,
+.header-socials button:focus {
   color: #cc95c9;
 }
